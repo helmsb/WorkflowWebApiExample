@@ -29,7 +29,15 @@
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.CodeDom.Providers.DotNetCompilerPlatform</AssemblyReference>
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Activities.Presentation</AssemblyReference>
+      <AssemblyReference>System.Net.Http</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
       <AssemblyReference>System.Web.DynamicData</AssemblyReference>
       <AssemblyReference>System.Web.Entity</AssemblyReference>
       <AssemblyReference>System.Web.ApplicationServices</AssemblyReference>
@@ -39,6 +47,7 @@
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
       <AssemblyReference>System.Web.Extensions</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>System.Drawing</AssemblyReference>
       <AssemblyReference>System.Web</AssemblyReference>
@@ -46,20 +55,11 @@
       <AssemblyReference>System.Configuration</AssemblyReference>
       <AssemblyReference>System.Web.Services</AssemblyReference>
       <AssemblyReference>System.EnterpriseServices</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.Net.Http.Formatting</AssemblyReference>
       <AssemblyReference>System.Web.Http</AssemblyReference>
       <AssemblyReference>System.Web.Http.WebHost</AssemblyReference>
-      <AssemblyReference>System.Net.Http</AssemblyReference>
-      <AssemblyReference>Microsoft.CodeDom.Providers.DotNetCompilerPlatform</AssemblyReference>
-      <AssemblyReference>PresentationFramework</AssemblyReference>
-      <AssemblyReference>PresentationCore</AssemblyReference>
-      <AssemblyReference>System.Activities</AssemblyReference>
-      <AssemblyReference>System.Activities.Presentation</AssemblyReference>
-      <AssemblyReference>System.Xaml</AssemblyReference>
-      <AssemblyReference>WindowsBase</AssemblyReference>
-      <AssemblyReference>System.ServiceModel</AssemblyReference>
-      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>WorkflowWebApiExample</AssemblyReference>
     </sco:Collection>
@@ -214,8 +214,8 @@
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">258.75,446.5</av:Point>
             <av:Size x:Key="ShapeSize">82.5,87</av:Size>
-            <av:PointCollection x:Key="FalseConnector">341.25,490 460,490 460,719</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">258.75,490 228.75,490 228.75,546.5 310,546.5 310,576.5</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">341.25,490 460,490 460,719</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -250,19 +250,19 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="636,831">
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="652,851">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">260,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">290,77.5 290,140</av:PointCollection>
-            <x:Double x:Key="Height">795</x:Double>
-            <x:Double x:Key="Width">622</x:Double>
+            <x:Double x:Key="Height">815</x:Double>
+            <x:Double x:Key="Width">638</x:Double>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WorkflowWebApiExample.Workflows.CheckLoanEligibility_1" sap:VirtualizedContainerService.HintSize="676,911" />
+      <sap2010:ViewStateData Id="WorkflowWebApiExample.Workflows.CheckLoanEligibility_1" sap:VirtualizedContainerService.HintSize="692,931" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

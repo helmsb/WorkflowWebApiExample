@@ -18,24 +18,32 @@ namespace WorkflowWebApiExample.CodeActivities
 
         protected override void Execute(CodeActivityContext context)
         {
-            context.SetValue(Valid, false);
+            var isValid = new bool?();
 
             var loan = context.GetValue(this.Loan);
 
-            if(loan.CreditRating > 0)
+            if (!(loan.CreditRating > 0))
             {
-                context.SetValue(Valid, true);
+                isValid = false;
             }
 
-            if(loan.DownPaymentAmount > 0)
+            if (!(loan.DownPaymentAmount > 0))
             {
-                context.SetValue(Valid, true);
+                isValid = false;
             }
 
-            if(loan.LoanAmount > 0)
+            if (!(loan.LoanAmount > 0))
             {
-                context.SetValue(Valid, true);
+                isValid = false;
             }
+
+            //If we didn't get set to false then we're valid.
+            if(!isValid.HasValue)
+            {
+                isValid = true;
+            }
+
+            context.SetValue(Valid, isValid);
 
         }
     }
