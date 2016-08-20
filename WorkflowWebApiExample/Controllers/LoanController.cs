@@ -13,14 +13,14 @@ namespace WorkflowWebApiExample.Controllers
     {
        
         //Run workflow logic to see if the loan application is valid.
-        public bool CheckLoanEligibility(Loan loan)
+        public ApprovalResponse CheckLoanEligibility(Loan loan)
         {
             var checkLoanEligibility = new Workflows.CheckLoanEligibility();
             var workflow = new WorkflowInvoker(checkLoanEligibility);
             var InputArguments = new Dictionary<string, object>();
             InputArguments.Add("loan", loan);
             var resultDictionary = workflow.Invoke(InputArguments);
-            var result = (bool)resultDictionary["approved"];
+            var result = (ApprovalResponse)resultDictionary["ApprovalResponse"];
 
             return result;
         }

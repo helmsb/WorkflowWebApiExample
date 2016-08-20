@@ -13,12 +13,12 @@ namespace WorkflowWebApiExample.Tests.UnitTests
     public class When_Validating_Loan_Is_Complete
     {
         private Loan _loan;
-        private bool? _result;
+        private ApprovalResponse _result;
 
         [TestInitialize]
         public void TestInit()
         {
-            _result = new bool?();
+            _result = new ApprovalResponse();
 
             _loan = new Loan
             {
@@ -31,12 +31,12 @@ namespace WorkflowWebApiExample.Tests.UnitTests
 
         private void Because()
         {
-            var validateLoanIsCompleteActivity = new WorkflowWebApiExample.CodeActivities.ValidateLoanIsComplete();
-            var workflowInvoker = new WorkflowInvoker(validateLoanIsCompleteActivity);
+            var validateLoanIsComplete = new WorkflowWebApiExample.CodeActivities.ValidateLoanIsComplete();
+            var workflowInvoker = new WorkflowInvoker(validateLoanIsComplete);
             var InputArguments = new Dictionary<string, object>();
             InputArguments.Add("Loan", _loan);
             var resultDictionary = workflowInvoker.Invoke(InputArguments);
-            _result = (bool)resultDictionary["Valid"];
+            _result = (ApprovalResponse)resultDictionary["ApprovalResponse"];
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace WorkflowWebApiExample.Tests.UnitTests
 
             Because();
 
-            Assert.IsFalse(_result.Value, "Expected to receive false when the amount was 0 but _result was true.");
+            Assert.IsFalse(_result.Approved, "Expected to receive false when the amount was 0 but _result was true.");
         }
 
         [TestMethod]
@@ -56,7 +56,7 @@ namespace WorkflowWebApiExample.Tests.UnitTests
 
             Because();
 
-            Assert.IsTrue(_result.Value, "Expected to receive true when the amount was greater than 0 but _result was false.");
+            Assert.IsTrue(_result.Approved, "Expected to receive true when the amount was greater than 0 but _result was false.");
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace WorkflowWebApiExample.Tests.UnitTests
 
             Because();
 
-            Assert.IsFalse(_result.Value, "Expected to receive false when the credit rating was 0 but _result was true.");
+            Assert.IsFalse(_result.Approved, "Expected to receive false when the credit rating was 0 but _result was true.");
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace WorkflowWebApiExample.Tests.UnitTests
 
             Because();
 
-            Assert.IsTrue(_result.Value, "Expected to receive true when the credit rating was greater than 0 but _result was true.");
+            Assert.IsTrue(_result.Approved, "Expected to receive true when the credit rating was greater than 0 but _result was true.");
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace WorkflowWebApiExample.Tests.UnitTests
 
             Because();
 
-            Assert.IsFalse(_result.Value, "Expected to receive false when the down payment was 0 but _result was true.");
+            Assert.IsFalse(_result.Approved, "Expected to receive false when the down payment was 0 but _result was true.");
         }
 
         [TestMethod]
@@ -96,7 +96,7 @@ namespace WorkflowWebApiExample.Tests.UnitTests
 
             Because();
 
-            Assert.IsTrue(_result.Value, "Expected to receive true when the down payment was 0 but _result was false.");
+            Assert.IsTrue(_result.Approved, "Expected to receive true when the down payment was 0 but _result was false.");
         }
     }
 }

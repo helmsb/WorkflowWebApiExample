@@ -12,8 +12,8 @@
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="approved" Type="OutArgument(x:Boolean)" />
     <x:Property Name="loan" Type="InArgument(local:Loan)" />
+    <x:Property Name="ApprovalResponse" Type="OutArgument(local:ApprovalResponse)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap2010:WorkflowViewState.IdRef>WorkflowWebApiExample.Workflows.CheckLoanEligibility_1</sap2010:WorkflowViewState.IdRef>
@@ -31,10 +31,12 @@
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>Microsoft.CodeDom.Providers.DotNetCompilerPlatform</AssemblyReference>
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>PresentationCore</AssemblyReference>
       <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>System.Activities.Presentation</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
       <AssemblyReference>System.Net.Http</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
@@ -44,28 +46,27 @@
       <AssemblyReference>System.ComponentModel.DataAnnotations</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
-      <AssemblyReference>System.Core</AssemblyReference>
-      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
       <AssemblyReference>System.Web.Extensions</AssemblyReference>
       <AssemblyReference>System.Xaml</AssemblyReference>
-      <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>System.Drawing</AssemblyReference>
       <AssemblyReference>System.Web</AssemblyReference>
       <AssemblyReference>System.Xml</AssemblyReference>
       <AssemblyReference>System.Configuration</AssemblyReference>
       <AssemblyReference>System.Web.Services</AssemblyReference>
       <AssemblyReference>System.EnterpriseServices</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
-      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.Net.Http.Formatting</AssemblyReference>
       <AssemblyReference>System.Web.Http</AssemblyReference>
       <AssemblyReference>System.Web.Http.WebHost</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>WorkflowWebApiExample</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
+      <Variable x:TypeArguments="x:Boolean" Name="Approval" />
       <Variable x:TypeArguments="x:Boolean" Name="applicationComplete" />
     </Flowchart.Variables>
     <Flowchart.StartNode>
@@ -107,13 +108,34 @@
                             <Assign DisplayName="Loan Approved" sap2010:WorkflowViewState.IdRef="Assign_1">
                               <Assign.To>
                                 <OutArgument x:TypeArguments="x:Boolean">
-                                  <mca:CSharpReference x:TypeArguments="x:Boolean">approved</mca:CSharpReference>
+                                  <mca:CSharpReference x:TypeArguments="x:Boolean">Approval</mca:CSharpReference>
                                 </OutArgument>
                               </Assign.To>
                               <Assign.Value>
                                 <InArgument x:TypeArguments="x:Boolean">True</InArgument>
                               </Assign.Value>
                             </Assign>
+                            <FlowStep.Next>
+                              <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                                <local1:GetMonthlyPayment sap2010:WorkflowViewState.IdRef="GetMonthlyPayment_1">
+                                  <local1:GetMonthlyPayment.Approval>
+                                    <InArgument x:TypeArguments="x:Boolean">
+                                      <mca:CSharpValue x:TypeArguments="x:Boolean">Approval</mca:CSharpValue>
+                                    </InArgument>
+                                  </local1:GetMonthlyPayment.Approval>
+                                  <local1:GetMonthlyPayment.ApprovalResponse>
+                                    <OutArgument x:TypeArguments="local:ApprovalResponse">
+                                      <mca:CSharpReference x:TypeArguments="local:ApprovalResponse">ApprovalResponse</mca:CSharpReference>
+                                    </OutArgument>
+                                  </local1:GetMonthlyPayment.ApprovalResponse>
+                                  <local1:GetMonthlyPayment.Loan>
+                                    <InArgument x:TypeArguments="local:Loan">
+                                      <mca:CSharpValue x:TypeArguments="local:Loan">loan</mca:CSharpValue>
+                                    </InArgument>
+                                  </local1:GetMonthlyPayment.Loan>
+                                </local1:GetMonthlyPayment>
+                              </FlowStep>
+                            </FlowStep.Next>
                           </FlowStep>
                         </FlowDecision.True>
                         <FlowDecision.False>
@@ -121,7 +143,7 @@
                             <Assign DisplayName="Loan Denied" sap2010:WorkflowViewState.IdRef="Assign_2">
                               <Assign.To>
                                 <OutArgument x:TypeArguments="x:Boolean">
-                                  <mca:CSharpReference x:TypeArguments="x:Boolean">approved</mca:CSharpReference>
+                                  <mca:CSharpReference x:TypeArguments="x:Boolean">Approval</mca:CSharpReference>
                                 </OutArgument>
                               </Assign.To>
                               <Assign.Value>
@@ -156,7 +178,8 @@
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
-    <sads:DebugSymbol.Symbol>d3RDOlxVc2Vyc1xibGFrZWhlbG1zXERvY3VtZW50c1xHaXRodWJcV29ya2Zsb3dXZWJBcGlFeGFtcGxlXFdvcmtmbG93V2ViQXBpRXhhbXBsZVxXb3JrZmxvd3NcQ2hlY2tMb2FuRWxpZ2liaWxpdHkueGFtbA5DA6ABDwIBAUkJVCkCAR5YD1hhAgEaeR2CASYCARRdE11tAgEQYhdiaAIBDGcbZ6MBAgEIax10JgIBAkwPTFMCASNRD1FpAgEfgAFJgAFOAgEZfCN8cgIBFXJJck0CAQduI25yAgED</sads:DebugSymbol.Symbol>
+    <x:Reference>__ReferenceID7</x:Reference>
+    <sads:DebugSymbol.Symbol>d3RDOlxVc2Vyc1xibGFrZWhlbG1zXERvY3VtZW50c1xHaXRodWJcV29ya2Zsb3dXZWJBcGlFeGFtcGxlXFdvcmtmbG93V2ViQXBpRXhhbXBsZVxXb3JrZmxvd3NcQ2hlY2tMb2FuRWxpZ2liaWxpdHkueGFtbBJDA7cBDwIBAUoJVSkCATRZD1lhAgEvjwEdmAEmAgEoXhNebQIBI2MXY2gCAR5oG2ijAQIBGWwddSYCARJ4IYgBPAIBAk0PTVMCATpSD1JpAgE1lgFJlgFOAgEukgEjkgFyAgEpc0lzTQIBGG8jb3ICAROFASeFAWsCAQ17J3tuAgEIgAEngAGLAQIBAw==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -174,11 +197,27 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="GetMonthlyPayment_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">20,839</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="FlowStep_1">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">19,719</av:Point>
             <av:Size x:Key="ShapeSize">242,62</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">140,781 140,811 120,811 120,839</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -250,19 +289,19 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="652,851">
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="690,978">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">260,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">290,77.5 290,140</av:PointCollection>
-            <x:Double x:Key="Height">815</x:Double>
-            <x:Double x:Key="Width">638</x:Double>
+            <x:Double x:Key="Height">942</x:Double>
+            <x:Double x:Key="Width">676</x:Double>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WorkflowWebApiExample.Workflows.CheckLoanEligibility_1" sap:VirtualizedContainerService.HintSize="692,931" />
+      <sap2010:ViewStateData Id="WorkflowWebApiExample.Workflows.CheckLoanEligibility_1" sap:VirtualizedContainerService.HintSize="730,1058" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

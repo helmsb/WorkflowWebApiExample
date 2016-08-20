@@ -13,7 +13,7 @@ namespace WorkflowWebApiExample.Tests.IntegrationTests
     public class When_checking_loan_eligibility
     {
         private Loan _loan;
-        private bool _result;
+        private bool? _result;
 
         [TestInitialize]
         public void TestInit()
@@ -44,7 +44,7 @@ namespace WorkflowWebApiExample.Tests.IntegrationTests
         {
             _loan.CreditRating = 600;
             Because();
-            Assert.IsFalse(_result, "Expected false when credit rating is below 650.");
+            Assert.AreEqual(_result, false, "Expected false when credit rating is below 650.");
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace WorkflowWebApiExample.Tests.IntegrationTests
         {
             _loan.CreditRating = 650;
             Because();
-            Assert.IsTrue(_result, "Expected true when credit rating is 650 or above.");
+            Assert.AreEqual(_result, true, "Expected true when credit rating is 650 or above.");
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace WorkflowWebApiExample.Tests.IntegrationTests
         {
             _loan.HasCollateral = false;
             Because();
-            Assert.IsFalse(_result, "Expected false when HasCollateral is false.");
+            Assert.AreEqual(_result, false, "Expected false when HasCollateral is false.");
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace WorkflowWebApiExample.Tests.IntegrationTests
         {
             _loan.HasCollateral = true;
             Because();
-            Assert.IsTrue(_result, "Expected true when HasCollateral is true.");
+            Assert.AreEqual(_result, true, "Expected true when HasCollateral is true.");
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace WorkflowWebApiExample.Tests.IntegrationTests
         {
             _loan.DownPaymentAmount = 1;
             Because();
-            Assert.IsFalse(_result, "Expected false when down payment is less than 20%.");
+            Assert.AreEqual(_result, false, "Expected false when down payment is less than 20%.");
         }
 
         [TestMethod]
@@ -84,7 +84,7 @@ namespace WorkflowWebApiExample.Tests.IntegrationTests
         {
             _loan.DownPaymentAmount = 20;
             Because();
-            Assert.IsTrue(_result, "Expected true when down payment is greater than 20%.");
+            Assert.AreEqual(_result, true, "Expected true when down payment is greater than 20%.");
         }
     }
 }

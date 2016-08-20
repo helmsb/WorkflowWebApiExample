@@ -8,12 +8,12 @@ namespace WorkflowWebApiExample.Tests.UnitTests
     public class When_calling_checkloaneligibility
     {
         private Loan _loan;
-        private bool _result;
+        private ApprovalResponse _result;
 
         [TestInitialize]
         public void TestInit()
         {
-            _result = new bool();
+            _result = new ApprovalResponse();
 
             _loan = new Loan
             {
@@ -36,7 +36,7 @@ namespace WorkflowWebApiExample.Tests.UnitTests
         public void Should_invoke_checkloaneligibiltiy_workflow()
         {
             Because();
-            Assert.IsTrue(_result, "CheckLoanEligibility Workflow was not invoked");
+            Assert.IsTrue(_result.Approved, "CheckLoanEligibility Workflow was not invoked");
         }
     }
 }
